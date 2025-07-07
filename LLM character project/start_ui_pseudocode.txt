@@ -1,0 +1,170 @@
+
+### RoleplayApp ###
+Class: RoleplayApp (inherits from CTk)
+
+Constructor (__init__):
+1. Set window title and size
+2. Initialize default theme colors
+3. Create a container frame to hold different UI screens
+4. Load and initialize each screen: StartMenu, ChatView, CharacterSettings, AdvancedSettings
+5. Show the StartMenu screen initially
+6. Load theme settings from file (if available) and apply them
+
+Method: apply_ui_theme(bg_color, accent_color, text_color, entry_bg_color)
+- Recursively apply theme colors to buttons, sliders, labels, entries, and frames
+
+Method: show_frame(name)
+- Brings the specified screen to the front
+
+Method: apply_theme_color(hex_color)
+- Applies a background color to all frames and their children
+
+Method: load_and_apply_settings()
+- Load color settings from advanced_settings.json and apply them
+
+### StartMenu ###
+Class: StartMenu
+
+Constructor (__init__):
+1. Set up UI layout with 3x3 grid and centered labels/buttons
+2. Load list of available characters from the Character directory
+3. Display dropdown menu for selecting a character
+4. Create buttons for: Start Chat, Load Session, Character Settings, Advanced Settings
+
+Method: apply_theme_colors()
+- Apply theme colors to dropdown
+
+Method: start_fresh_chat()
+- Clear chat display and input box
+- Reset chat state to uninitialized
+- Reload character data from file
+- Switch to ChatView screen
+
+Method: load_session_from_start()
+- Open file dialog to choose a session file
+- Load character name, scenario, and prefix from session
+- Update character config file with session values
+- Show previous chat content
+- Reload character assets
+- Switch to ChatView
+
+### ChatView ###
+Class: ChatView
+
+Constructor (__init__):
+1. Set up layout and buttons (Send, Save, Load, Edit, Back)
+2. Load color settings for chat and apply them to chat display
+3. Create chat display and input box
+4. Create toggle for debug mode and initialize chat state
+5. Prepare character embedding model (SentenceTransformer)
+
+Method: toggle_debug_mode()
+- Update debug_mode based on checkbox
+
+Method: retry_last_response()
+- Remove last bot message from chat
+- Re-send previous user input
+
+Method: toggle_edit_last_reply()
+- Allow user to edit the last AI reply
+
+Method: apply_theme_colors()
+- Update display colors for current theme
+
+Method: save_session()
+- Save current chat, prefix, and scenario to a session file
+
+Method: load_session()
+- Load chat, prefix, and scenario from session file
+- Apply these to the character's config and reload memory
+
+Method: confirm_back_to_main()
+- Ask for confirmation and go back to main menu if accepted
+
+Method: send_message()
+- Read user input
+- Add it to chat display
+- Generate full prompt including memory and send it to LLM
+
+Method: fetch_and_display_reply(prompt)
+- Send prompt to API, remove '(Thinking...)', show bot response
+
+Method: insert_tagged_chat(chat_text)
+- Reconstruct chat in display using tags for bot/user/debug lines
+
+Method: call_llm_api(prompt)
+- Build and send API request to LLM using saved settings
+- Return the reply or error message
+
+Method: retrieve_relevant_memories(user_message)
+- Search FAISS memory index for related chunks
+- Match with lemmatized keywords to apply boost
+- Return formatted memory chunks for prompt
+
+Method: tkraise()
+- Run once when ChatView is shown to ensure character is loaded
+
+Method: load_character_assets(force_reload=False)
+- Load prefix, scenario, and memory index for selected character
+
+### CharacterSettings ###
+Class: CharacterSettings
+
+Constructor (__init__):
+1. Display dropdown to select a character from config folders
+2. Display boxes to edit scenario and prefix text
+3. Provide buttons to load/save scenario and prefix from/to files
+4. Input for setting the character's text color
+
+Method: is_valid_hex_color(color)
+- Returns True if string is a valid hex color code
+
+Method: apply_theme_colors()
+- Apply current UI colors to scenario and prefix boxes
+
+Method: load_character()
+- Load selected character's config and fill UI with values
+
+Method: save_character()
+- Save scenario, prefix, and text color to config file
+- If current character is active, reload it in ChatView
+
+Method: load_scenario_from_file() / save_scenario_to_file()
+- Load or save scenario text to/from a file in the character's folder
+
+Method: load_prefix_from_file() / save_prefix_to_file()
+- Load or save prefix instructions to/from a file in the character's folder
+
+### AdvancedSettings ###
+Class: AdvancedSettings
+
+Constructor (__init__):
+1. Load settings from file (or use defaults)
+2. Create labeled sliders, entries, and checkboxes for:
+   - LLM model name, temperature, penalties, memory chunks
+   - Colors for UI, chat text, user text, debug
+   - Other settings: token limit, auto-scroll, prompt preview
+3. Add buttons to save, load, or show settings
+
+Methods: get_temperature(), get_max_tokens(), etc.
+- Return parsed values from sliders or text entries
+
+Method: save_settings_as()
+- Save current UI values to a file and as default
+
+Method: load_settings()
+- Load from default JSON if it exists
+
+Method: load_settings_from_file()
+- Load from a profile file and apply it to UI
+
+Method: apply_settings(data)
+- Set UI components based on loaded settings
+- Update controller theme and apply colors
+
+Method: print_current_values()
+- Output current settings to the console for debugging
+
+### Main ###
+Main Execution:
+- If this file is run directly, launch the RoleplayApp window

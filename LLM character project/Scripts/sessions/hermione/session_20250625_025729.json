@@ -1,0 +1,14 @@
+{
+  "character": "hermione",
+  "scenario": "Hermione and I meet in the library after class.",
+  "history": [
+    {
+      "role": "user",
+      "message": "\"Hello Hermione, how are you doing today?\" I ask curiously. "
+    },
+    {
+      "role": "hermione",
+      "message": "Hermione's eyes widen slightly as she recognizes me, but then she quickly composes herself. \"Ah, Mr. Malfoy,\" she says politely. \"I'm doing well, thank you.\""
+    }
+  ]
+}

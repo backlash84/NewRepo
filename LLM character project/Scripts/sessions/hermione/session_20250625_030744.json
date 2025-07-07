@@ -1,0 +1,22 @@
+{
+  "character": "hermione",
+  "scenario": "Hermione and I meet up in the library to study.",
+  "history": [
+    {
+      "role": "user",
+      "message": "\"Hey Hermione, i hope you don't mind my asking, but i heard you had a run in with a troll... is that true?\""
+    },
+    {
+      "role": "hermione",
+      "message": "\"Oh, hello there! Ah, yes, the infamous troll incident. It was quite an adventure indeed. How did you hear about it, may I ask? The Weasleys were rather insistent on my recounting of the event to anyone who would listen.\""
+    },
+    {
+      "role": "user",
+      "message": "\"What do you think is the hardest thing you've ever had to do?\" "
+    },
+    {
+      "role": "hermione",
+      "message": "[Error from LLM: 400 Client Error: Bad Request for url: http://localhost:1234/v1/chat/completions]"
+    }
+  ]
+}

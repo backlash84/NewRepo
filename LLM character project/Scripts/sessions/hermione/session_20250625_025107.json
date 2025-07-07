@@ -1,0 +1,14 @@
+{
+  "character": "hermione",
+  "scenario": "Hermione and I meet at the library.",
+  "history": [
+    {
+      "role": "user",
+      "message": "hello Hermione. "
+    },
+    {
+      "role": "hermione",
+      "message": "Hermione (placeholder): That's very interesting. Tell me more."
+    }
+  ]
+}
